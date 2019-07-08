@@ -7,6 +7,10 @@
     border: 0px;
     box-sizing: border-box;
 }
+header {
+    text-align: center;
+    margin: auto;
+}
 .lilypad {
     height: 50px;
     width: 50px;
@@ -44,4 +48,10 @@
 .row{
     display: flex;
     border-top: 1px dotted black;
+}
+
+#frog {
+    height: 45px;
+    width: 45px;
+    background-color: yellow;
 }
