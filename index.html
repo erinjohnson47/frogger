@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Frogger</h1>
+    </header>
+    <section>
+        <div id="gameboard">
+            <div id="row1" class="row">
+                <div class="bush"></div>
+                <div class="lilypad"></div>
+                <div class="bush"></div>
+                <div class="lilypad"></div>
+                <div class="bush">
+                </div>
+                <div class="lilypad">
+                </div>
+                <div class="bush">
+                </div>
+                <div class="lilypad">
+                </div>
+                <div class="bush">
+                </div>
+                <div class="lilypad">
+                </div>
+                <div class="bush">
+                </div>
+            </div>
+            <div id="row2" class="row">
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+            </div>
+            <div id="row3" class="row">
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+            </div>
+            <div id="row4" class="row">
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+            </div>
+            <div id="row5" class="row">
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+                <div class="water">
+                </div>
+            </div>
+            <div id="row6" class="row">
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+            </div>
+            <div id="row7" class="row">
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+            </div>
+            <div id="row8" class="row">
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+            </div>
+            <div id="row9" class="row">
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+            </div>
+            <div id="row10" class="row">
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+                <div class="road">
+                </div>
+            </div>
+            <div id="row11" class="row">
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+                <div class="grass">
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        created by Erin 
+    </footer>
+    <script src="js/app.js"></script>
+</body>
+</html>
