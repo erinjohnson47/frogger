@@ -25,7 +25,6 @@ playBtn.addEventListener("click", () => {
 })
 const key = document.addEventListener('keydown', (e) => {
     e.preventDefault(); //stops the page from scrolling instead of the frog moving
-    console.log(`Key ${e.key} was pressed.`)
     switch (e.key) {
         case "ArrowLeft":
             game.move(e.key);
@@ -112,12 +111,12 @@ const game = {
             this.currentPosition = [y, x-1];
             row[y].children[x-1].appendChild(frogImg);
         } else if (key === "ArrowDown" && this.gameboard[y+1]) {
-            this.gameboard[y][x] = this.gameboard[y][x].slice(0,this.gameboard[x][y].length-1);
+            this.gameboard[y][x] = this.gameboard[y][x].slice(0,this.gameboard[y][x].length-1);
             this.gameboard[y+1][x]+='F';
             this.currentPosition = [y+1, x];
             row[y+1].children[x].appendChild(frogImg);
         } else if (key === "ArrowRight" && this.gameboard[y][x+1]) {
-            this.gameboard[y][x] = this.gameboard[y][x].slice(0,this.gameboard[x][y].length-1);
+            this.gameboard[y][x] = this.gameboard[y][x].slice(0,this.gameboard[y][x].length-1);
             this.gameboard[y][x+1]+='F';
             this.currentPosition = [y, x+1];
             row[y].children[x+1].appendChild(frogImg);
