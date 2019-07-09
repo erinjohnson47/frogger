@@ -6,6 +6,7 @@ car.setAttribute('id','car');
 const frog = document.createElement('div');
 frog.setAttribute('id', 'frog');
 
+document.addEventListener('KeyboardEvent',)
 const game = {
     lives: 3,
     timer: 60,
