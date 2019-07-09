@@ -112,15 +112,16 @@ const game = {
             this.currentPosition = [y, x-1];
             row[y].children[x-1].appendChild(frogImg);
         } else if (key === "ArrowDown" && this.gameboard[y+1]) {
-
-            this.gameboard[y+=1][x]+'F';
+            this.gameboard[y][x] = this.gameboard[y][x].slice(0,this.gameboard[x][y].length-1);
+            this.gameboard[y+1][x]+='F';
+            this.currentPosition = [y+1, x];
+            row[y+1].children[x].appendChild(frogImg);
         } else if (key === "ArrowRight" && this.gameboard[y][x+1]) {
-            
-            this.gameboard[y][x+=1]+'F';
+            this.gameboard[y][x] = this.gameboard[y][x].slice(0,this.gameboard[x][y].length-1);
+            this.gameboard[y][x+1]+='F';
+            this.currentPosition = [y, x+1];
+            row[y].children[x+1].appendChild(frogImg);
         }
-            
-                // console.log(row[i].children[j])
-                // console.log(frog);
     }
     // car() {
     //     //logic here that moves cars across the screen at varying speends in alternating directions
