@@ -36,6 +36,7 @@ nav a {
 
 .intro{
     height: 100vh;
+    /*alternate idea - make instructions disappear when "play" is clicked so game board slides up to top and "Frogger" name stays at top */
 }
 #instructions {
     font-family: 'Exo 2', sans-serif;
@@ -49,11 +50,15 @@ nav a {
 }
 
 .row div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 55px;
     width: 55px;
 }
 .lilypad {
-    background-color: aquamarine;
+    background-color: blue;
+    
 }
 .bush {
     background-color: darkgreen;
@@ -68,6 +73,7 @@ nav a {
 
 .road {
     background-color: darkgray;
+    border-top: 2px dashed white;
 }
 
 #gameboard {
@@ -80,7 +86,6 @@ nav a {
 
 .row{
     display: flex;
-    border-top: 1px dotted black;
 }
 
 .console {
@@ -98,7 +103,7 @@ nav a {
 #frog {
     height: 50px;
     width: 50px;
-    background-color: yellow;
+    /* background-color: yellow; */
 }
 a:hover {
     color: darkgreen;

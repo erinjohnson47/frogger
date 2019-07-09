@@ -1,10 +1,18 @@
 //variables to reuse throughout game
 const log = document.createElement('div');
-log.setAttribute('id', 'log');
+const logImg = document.createElement('img');
+    logImg.id='log';
+    logImg.src = "images/log.png";
+    log.appendChild(logImg);
 const car = document.createElement('div');
 car.setAttribute('id','car');
 const frog = document.createElement('div');
-frog.setAttribute('id', 'frog');
+// frog.setAttribute('id', 'frog');
+const frogImg = document.createElement('img');
+    frogImg.id='frog';
+    frogImg.src="images/frogger.png";
+    frog.appendChild(frogImg);
+
 const playBtn = document.querySelector('#start');
 
 playBtn.addEventListener("click", () => {
@@ -71,7 +79,7 @@ const game = {
         for (let i=0; i<this.gameboard.length; i++) {
             for (let j=0; j<this.gameboard[i].length; j++){
                 if (this.gameboard[i][j].includes("F")){
-                    row[i].children[j].appendChild(frog)
+                    row[i].children[j].appendChild(frogImg)
                     // console.log(row[i].children[j])
                     // console.log(frog);
                 }
