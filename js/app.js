@@ -109,46 +109,101 @@ const game = {
         // let x = this.currentPosition[1];
         //logic here that moves cars across the screen at varying speends in alternating directions
         //use for loop to loop through array with interval timer
-        this.gameboard[9][10] = 'rC'; //cars in row 9 should move left slowly
-        this.gameboard[8][4] = 'rC'; //cars in row 8 should move right quickly
-        this.gameboard[7][7] = 'rC'; //cars in row 7 should move left quickly
-        this.gameboard[6][3] = 'rC'; //cars in row 6 should move right slowly
-        setInterval(() => {  
-            let currentC3Position = 10;
+        this.gameboard[9][10] = 'rC'; //car1 in row 9 should move left slowly
+        this.gameboard[8][0] = 'rC'; //car3 in row 8 should move right quickly
+        this.gameboard[7][10] = 'rC'; //car2 in row 7 should move left quickly
+        this.gameboard[6][0] = 'rC'; //car4 in row 6 should move right slowly
+        setInterval(() => {  //row 9, car 1, left/slow
+            let currentCPosition = 10;
             for (let i = 0; i<=10; i++) {
                 if (this.gameboard[9][i].includes('C')) {
-                    currentC3Position = i;
+                    currentCPosition = i;
                 }
             }
-                row[9].children[currentC3Position].appendChild(car3);
-                if (currentC3Position === 0) {
-                    this.gameboard[9][currentC3Position] = this.gameboard[9][currentC3Position].slice(0,this.gameboard[9][currentC3Position].length-1);
-                    this.gameboard[9][10] += 'C';
-                    row[9].children[10].appendChild(car3);
-                } else{
-                    this.gameboard[9][currentC3Position] = this.gameboard[9][currentC3Position].slice(0,this.gameboard[9][currentC3Position].length-1);
-                    this.gameboard[9][currentC3Position-1] += 'C';
-                    row[9].children[currentC3Position].appendChild(car3);
-                }
-                console.log(row[9].children[currentC3Position]);
-                console.log(this.gameboard);
-                this.checkMove()
+            row[9].children[currentCPosition].appendChild(car1);
+            if (currentCPosition === 0) {
+                this.gameboard[9][currentCPosition] = this.gameboard[9][currentCPosition].slice(0,this.gameboard[9][currentCPosition].length-1);
+                this.gameboard[9][10] += 'C';
+                row[9].children[10].appendChild(car1);
+            } else{
+                this.gameboard[9][currentCPosition] = this.gameboard[9][currentCPosition].slice(0,this.gameboard[9][currentCPosition].length-1);
+                this.gameboard[9][currentCPosition-1] += 'C';
+                row[9].children[currentCPosition].appendChild(car1);
+            }
+            this.checkMove()
             }, 1000)
+        setInterval(() => {  //row 8, car3, right, fast
+            let currentCPosition = 0;
+            for (let i = 0; i<=10; i++) {
+                if (this.gameboard[8][i].includes('C')) {
+                    currentCPosition = i;
+                }
+            }
+            row[8].children[currentCPosition].appendChild(car3);
+            if (currentCPosition === 10) {
+                this.gameboard[8][currentCPosition] = this.gameboard[8][currentCPosition].slice(0,this.gameboard[8][currentCPosition].length-1);
+                this.gameboard[8][0] += 'C';
+                row[8].children[0].appendChild(car3);
+            } else{
+                this.gameboard[8][currentCPosition] = this.gameboard[8][currentCPosition].slice(0,this.gameboard[8][currentCPosition].length-1);
+                this.gameboard[8][currentCPosition+1] += 'C';
+                row[8].children[currentCPosition].appendChild(car3);
+            }
+            this.checkMove()
+            }, 600)
+        setInterval(() => {  //row 7, car 2, left, fast
+            let currentCPosition = 10;
+            for (let i = 0; i<=10; i++) {
+                if (this.gameboard[7][i].includes('C')) {
+                    currentCPosition = i;
+                }
+            }
+            row[7].children[currentCPosition].appendChild(car2);
+            if (currentCPosition === 0) {
+                this.gameboard[7][currentCPosition] = this.gameboard[7][currentCPosition].slice(0,this.gameboard[7][currentCPosition].length-1);
+                this.gameboard[7][10] += 'C';
+                row[7].children[10].appendChild(car2);
+            } else{
+                this.gameboard[7][currentCPosition] = this.gameboard[7][currentCPosition].slice(0,this.gameboard[7][currentCPosition].length-1);
+                this.gameboard[7][currentCPosition-1] += 'C';
+                row[7].children[currentCPosition].appendChild(car2);
+            }
+            this.checkMove()
+            }, 450)
+        setInterval(() => {  //row 6, car 4, right slow
+            let currentCPosition = 0;
+            for (let i = 0; i<=10; i++) {
+                if (this.gameboard[6][i].includes('C')) {
+                    currentCPosition = i;
+                }
+            }
+            row[6].children[currentCPosition].appendChild(car4);
+            if (currentCPosition === 10) {
+                this.gameboard[6][currentCPosition] = this.gameboard[6][currentCPosition].slice(0,this.gameboard[6][currentCPosition].length-1);
+                this.gameboard[6][0] += 'C';
+                row[6].children[0].appendChild(car4);
+            } else{
+                this.gameboard[6][currentCPosition] = this.gameboard[6][currentCPosition].slice(0,this.gameboard[6][currentCPosition].length-1);
+                this.gameboard[6][currentCPosition+1] += 'C';
+                row[6].children[currentCPosition].appendChild(car4);
+            }
+            this.checkMove()
+            }, 850)
     },
     checkMove() {
         let y = this.currentFPosition[0];
         let x = this.currentFPosition[1];
-            if (this.gameboard[y][x] === 'wF' || this.gameboard[y][x] === 'bF' || this.gameboard[y][x].includes('C')) {
-                console.log(`${this.gameboard[y][x]}: Your Frog is DEAD! :-X`);
-                //code for frog dies
-                //reset timer
-                //reduce lives by 1, place new frog on board
-            } else if (this.gameboard[y][x] === 'lf') {
-                console.log(`${this.gameboard[y][x]}: Congrats your Frog made it to safety!`);
-                //code for next frog placed on board
-                //reset timer
-                //add points?
-            }
+        if (this.gameboard[y][x] === 'wF' || this.gameboard[y][x] === 'bF' || this.gameboard[y][x].includes('C')) {
+            console.log(`${this.gameboard[y][x]}: Your Frog is DEAD! :-X`);
+            //code for frog dies
+            //reset timer
+            //reduce lives by 1, place new frog on board
+        } else if (this.gameboard[y][x] === 'lf') {
+            console.log(`${this.gameboard[y][x]}: Congrats your Frog made it to safety!`);
+            //code for next frog placed on board
+            //reset timer
+            //add points?
+        }
     },
     // log() {
     //  //logic here that moves logs across the screen at random speeds in alternating directions
