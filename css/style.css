@@ -104,6 +104,10 @@ nav a {
     width: 50px;
     /* background-color: yellow; */
 }
+.car {
+    height: 55px;
+    width: 55px;
+}
 a:hover {
     color: darkgreen;
 }
