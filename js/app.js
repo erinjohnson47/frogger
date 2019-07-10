@@ -5,24 +5,30 @@ const log3 = document.createElement('img');
 const log2 = document.createElement('img');
     log2.class='log';
     log2.src = "images/log2.png";
+
 const log3b = document.createElement('img');
     log3b.class='log';
     log3b.src = "images/log3b.png";
+
 const log2b = document.createElement('img');
     log2b.class='log';
     log2b.src = "images/log2b.png";
+
 const car1 = document.createElement('img'); //consider adding for loop to loop through cars?
-    car1.id='car3';
+    car1.id='car1';
     car1.src='images/car1.png';
     car1.className='car';
+
 const car2 = document.createElement('img');
     car2.id='car2';
     car2.src='images/car2.png';
     car2.className='car';
+
 const car3 = document.createElement('img');
     car3.id='car3';
     car3.src='images/car3.png';
     car3.className='car';
+
 const car4 = document.createElement('img');
     car4.id='car4';
     car4.src='images/car4.png';
@@ -40,6 +46,7 @@ playBtn.addEventListener("click", () => {
     game.start();
     game.cars();
     game.logs();
+    game.timerStart();
 })
 const key = document.addEventListener('keydown', (e) => {
     e.preventDefault(); //stops the page from scrolling instead of the frog moving
@@ -60,8 +67,9 @@ const key = document.addEventListener('keydown', (e) => {
 });
 
 const game = {
-    lives: 6, /*code here to show 3 frog icons instead of the number 3*/
-    timer: 60,
+    lives: 6, /*code here to show frog icons instead of the number?*/
+    timer: 61, /*code to show timer status bar instead of numbers?*/
+    score: 0,
     currentFPosition: [10,5],
     gameboard: [
         ['b','l','b','l','b','l','b','l','b','l','b'],
@@ -79,11 +87,46 @@ const game = {
     start() {
         let y = this.currentFPosition[0];
         let x = this.currentFPosition[1];
+        this.timer = 60;
         this.gameboard[10][5] = 'gF'
         if (this.gameboard[y][x].includes("F")){
             row[y].children[x].appendChild(frog)
         }
-        this.cars();
+    },
+    timerStart(key) {
+        if (this.timer===60 && key==="ArrowUp") {
+            this.timer--
+        const timer = setInterval(() => {
+            let y = this.currentFPosition[0];
+            let x = this.currentFPosition[1];
+            this.timer -= 1;
+            document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
+            if (this.timer === 0) {
+                clearInterval(timer);
+                this.currentFPosition= [10,5];
+                this.start();
+                document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
+            } else if (this.gameboard[y][x] === 'lF') {
+                clearInterval(timer);
+                // switch (this.currentFPosition[y][x]) {
+                //     case this.currentFPosition === [0,1]:
+                //     row[0].removeChild('#lilypad1');
+                //     case this.currentFPosition === [0,3]:
+                //     row[0].removeChild('#lilypad2');
+                //     case this.currentFPosition === [0,5]:
+                //     row[0].removeChild('#lilypad3');
+                //     case this.currentFPosition === [0,7]:
+                //     row[0].removeChild('#lilypad4');
+                //     case this.currentFPosition === [0,9]:
+                //     row[0].removeChild('#lilypad5');
+                // }
+                this.currentFPosition= [10,5];
+                this.start();
+                document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
+            }
+            
+            }, 1000);
+        }
     },
     move(key) {
         let y = this.currentFPosition[0];
@@ -94,6 +137,7 @@ const game = {
             this.gameboard[y-1][x] += 'F';
             this.currentFPosition = [y-1, x];
             row[y-1].children[x].appendChild(frog);
+            this.timerStart(key)
         } else if (key === "ArrowLeft" && this.gameboard[y][x-1]) {
             this.gameboard[y][x]= this.gameboard[y][x].slice(0,this.gameboard[y][x].length-1);
             this.gameboard[y][x-1] += 'F';
@@ -110,15 +154,9 @@ const game = {
             this.currentFPosition = [y, x+1];
             row[y].children[x+1].appendChild(frog);
         }
-        console.log(this.gameboard);
         this.checkMove();
     },
     cars() {
-        // let currentC3Position: [9,8];
-        // let y = this.currentPosition[0];
-        // let x = this.currentPosition[1];
-        //logic here that moves cars across the screen at varying speends in alternating directions
-        //use for loop to loop through array with interval timer
         this.gameboard[9][10] = 'rC'; //car1 in row 9 should move left slowly
         this.gameboard[8][0] = 'rC'; //car3 in row 8 should move right quickly
         this.gameboard[7][10] = 'rC'; //car2 in row 7 should move left quickly
@@ -205,8 +243,7 @@ const game = {
         let x = this.currentFPosition[1];
         if (this.gameboard[y][x] === 'wF' || this.gameboard[y][x] === 'bF' || this.gameboard[y][x].includes('C')) {
             console.log(`${this.gameboard[y][x]}: Your Frog is DEAD! :-X`);
-            //code for frog dies
-            //reset timer
+            this.lives -= 1;
             //reduce lives by 1, place new frog on board
         } else if (this.gameboard[y][x] === 'lF') {
             console.log(`${this.gameboard[y][x]}: Congrats your Frog made it to safety!`);
@@ -296,5 +333,9 @@ const game = {
             }
             this.checkMove()
         }, 900)
+    },
+    gameReset() {
+        this.lives -=1;
+
     }
 }

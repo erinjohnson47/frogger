@@ -65,7 +65,10 @@ nav a {
 .water {
     background-color: blue;
 }
-
+.log {
+    height: 45px;
+    width: auto;
+}
 .grass {
     background-color: green;
 }
@@ -98,7 +101,9 @@ nav a {
     width: 199px;
     text-align: center;
 }
-
+.log {
+    overflow: hidden;
+}
 #frog {
     height: 50px;
     width: 50px;
