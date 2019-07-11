@@ -44,11 +44,11 @@ playBtn.addEventListener("click", () => {
 
 })
 const key = document.addEventListener('keydown', (e) => {
-    e.preventDefault(); //stops the page from scrolling instead of the frog moving
+    e.preventDefault(); 
     switch (e.key) {
         case "ArrowLeft":
             game.move(e.key);
-            break; //what is this - it's in a lot of the code????
+            break; 
         case "ArrowRight":
             game.move(e.key);
             break;
@@ -125,7 +125,7 @@ const game = {
                 this.start();
                 document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
             }
-            // this.checkMove()
+            this.checkMove()
             }, 1000);
         }
     },
@@ -155,6 +155,7 @@ const game = {
             this.currentFPosition = [y, x+1];
             row[y].children[x+1].appendChild(frog);
         }
+        console.log(this.gameboard);
         this.checkMove();
     },
     cars() {
@@ -179,9 +180,6 @@ const game = {
                 this.gameboard[9][currentCPosition-1] += 'C';
                 row[9].children[currentCPosition].appendChild(car1);
             }
-            // if (this.gameboard[9].includes('F')) {
-            //     this.checkMove()
-            // }
             }, 1000)
         setInterval(() => {  //row 8, car3, right, fast
             let currentCPosition = 0;
@@ -200,11 +198,6 @@ const game = {
                 this.gameboard[8][currentCPosition+1] += 'C';
                 row[8].children[currentCPosition].appendChild(car3);
             }
-            // for (let j = 0; j<=row[8].length-1; j++) {
-            //     if (this.gameboard[8][j].includes('F')) {
-            //     this.checkMove()
-            //     }
-            // }
             }, 600)
         setInterval(() => {  //row 7, car 2, left, fast
             let currentCPosition = 10;
@@ -222,12 +215,7 @@ const game = {
                 this.gameboard[7][currentCPosition] = this.gameboard[7][currentCPosition].slice(0,this.gameboard[7][currentCPosition].length-1);
                 this.gameboard[7][currentCPosition-1] += 'C';
                 row[7].children[currentCPosition].appendChild(car2);
-            }
-            // for (let j = 0; j<=row[7].length-1; j++) {
-            //     if (this.gameboard[7][j].includes('F')) {
-            //     this.checkMove()
-            //     }
-            // }           
+            }           
             }, 450)
         setInterval(() => {  //row 6, car 4, right slow
             let currentCPosition = 0;
@@ -245,12 +233,7 @@ const game = {
                 this.gameboard[6][currentCPosition] = this.gameboard[6][currentCPosition].slice(0,this.gameboard[6][currentCPosition].length-1);
                 this.gameboard[6][currentCPosition+1] += 'C';
                 row[6].children[currentCPosition].appendChild(car4);
-            }
-            // for (let j = 0; j<=row[6].length-1; j++) {
-            //     if (this.gameboard[6][j].includes('F')) {
-            //     // this.checkMove()
-            //     }
-            // }       
+            }       
         }, 850)
     },
     checkMove() {
@@ -266,9 +249,13 @@ const game = {
         }
     },
     logs() {
+    let current2A1Position = 6;
+    let current2B1Position = 7;
     this.gameboard[1][0] = 'wL'; //log3 in row 1 should move right, slowly
-    this.gameboard[2][8] = 'wL'; //log2-b in row 2 should move left quickly
-    this.gameboard[2][9] = 'wL'; //log2-a in row 2 should move left quickly
+    this.gameboard[1][1] = 'wL'; //log3 in row 1 should move right, slowly
+    this.gameboard[1][2] = 'wL'; //log3 in row 1 should move right, slowly
+    this.gameboard[2][6] = 'wL'; //log2-b in row 2 should move left quickly
+    this.gameboard[2][7] = 'wL'; //log2-a in row 2 should move left quickly
     this.gameboard[3][0] = 'wL'; //log3b in row 3 should move left slowly
     this.gameboard[4][10] = 'wL'; //log2b in row 4 should move right quickly
         setInterval(() => { 
@@ -288,44 +275,41 @@ const game = {
                 this.gameboard[1][currentLPosition+1] += 'L';
                 row[1].children[currentLPosition].appendChild(log3);
             }
-            // for (let j = 0; j<=row[1].length-1; j++) {
-            //     if (this.gameboard[1][j].includes('F')) {
-            //     this.checkMove()
-            //     }
-            // }
         }, 900)
         setInterval(() => { 
-            let currentAPosition = 6;
-            let currentBPosition = 7;
-            for (let i = 0; i<10; i++) {
-                if (this.gameboard[2][i].includes('L')) {
-                    currentAPosition = i;
-                    currentBPosition = currentAPosition+1;
-                }
-            }
-            row[2].children[currentAPosition].appendChild(log2a);
-            row[2].children[currentBPosition].appendChild(log2b);
-            if (currentAPosition === 0) {
-                this.gameboard[2][currentAPosition] = this.gameboard[2][currentAPosition].slice(0,this.gameboard[2][currentAPosition].length-1);
+            row[2].children[current2A1Position].appendChild(log2a);
+            row[2].children[current2B1Position].appendChild(log2b);
+            if (current2A1Position === 0 && current2B1Position === 1) {
+                current2A1Position = 10;
+                current2B1Position = 0;
+                this.gameboard[2][1] = this.gameboard[2][1].slice(0,this.gameboard[2][1].length-1);
+                this.gameboard[2][current2B1Position] = this.gameboard[2][current2B1Position].slice(0,this.gameboard[2][current2B1Position].length-1);
                 this.gameboard[2][10] += 'L';
+                this.gameboard[2][0] += 'L';
                 row[2].children[10].appendChild(log2a);
                 row[2].children[0].appendChild(log2b);
-            } else if (currentAPosition === 10) {
-                currentBPosition === 0;
-                if (currentBPosition === 0) {
-                this.gameboard[2][currentBPosition] = this.gameboard[2][currentBPosition].slice(0,this.gameboard[2][currentBPosition].length-1);
-                this.gameboard[2][10] += 'L';
-                row[2].children[10].appendChild(log2b);}
+            } else if (current2A1Position === 10 && current2B1Position===0) {
+                current2B1Position = 0;
+                if (current2B1Position === 0) {
+                    this.gameboard[2][current2B1Position] = this.gameboard[2][current2B1Position].slice(0,this.gameboard[2][current2B1Position].length-1);
+                    this.gameboard[2][9] += 'L';
+                    row[2].children[9].appendChild(log2a);
+                    row[2].children[10].appendChild(log2b);}
+                    current2A1Position = 9;
+                    current2B1Position = 10;
             }
             else {
-                this.gameboard[2][currentAPosition] = this.gameboard[2][currentAPosition].slice(0,this.gameboard[2][currentAPosition].length-1);
-                this.gameboard[2][currentBPosition] = this.gameboard[2][currentBPosition].slice(0,this.gameboard[2][currentBPosition].length-1);
-                this.gameboard[2][currentAPosition-1] += 'L';
-                this.gameboard[2][currentAPosition-2] += 'L';
-                row[2].children[currentAPosition].appendChild(log2a);
-                row[2].children[currentBPosition].appendChild(log2b);
+                this.gameboard[2][current2A1Position] = this.gameboard[2][current2A1Position].slice(0,this.gameboard[2][current2A1Position].length-1);
+                this.gameboard[2][current2A1Position-1] += 'L';
+                current2A1Position -= 1;
+                row[2].children[current2A1Position].appendChild(log2a);
+                this.gameboard[2][current2B1Position] = this.gameboard[2][current2B1Position].slice(0,this.gameboard[2][current2B1Position].length-1);
+                this.gameboard[2][current2B1Position-1] += 'L';
+                current2B1Position -= 1;
+                row[2].children[current2B1Position].appendChild(log2b);
             } 
-        }, 450)
+            console.log(this.gameboard);
+        }, 1000)
         setInterval(() => { 
             let currentLPosition = 10;
             for (let i = 0; i<=10; i++) {
@@ -343,35 +327,30 @@ const game = {
                 this.gameboard[3][currentLPosition-1] += 'L';
                 row[3].children[currentLPosition].appendChild(log3b);
             }
-            // for (let j = 0; j<=row[3].length-1; j++) {
-            //     if (this.gameboard[3][j].includes('F')) {
-            //     this.checkMove()
-            //     }
-            // }
         }, 900)
-        // setInterval(() => { 
-        //     let currentLPosition = 0;
-        //     for (let i = 0; i<=10; i++) {
-        //         if (this.gameboard[4][i].includes('L')) {
-        //             currentLPosition = i;
-        //         }
-        //     }
-        //     row[4].children[currentLPosition].appendChild(log2b);
-        //     if (currentLPosition === 10) {
-        //         this.gameboard[4][currentLPosition] = this.gameboard[4][currentLPosition].slice(0,this.gameboard[4][currentLPosition].length-1);
-        //         this.gameboard[4][0] += 'L';
-        //         row[4].children[0].appendChild(log2b);
-        //     } else{
-        //         this.gameboard[4][currentLPosition] = this.gameboard[4][currentLPosition].slice(0,this.gameboard[4][currentLPosition].length-1);
-        //         this.gameboard[4][currentLPosition+1] += 'L';
-        //         row[4].children[currentLPosition].appendChild(log2b);
-        //     }
-            // for (let j = 0; j<=row[4].length-1; j++) {
-            //     if (this.gameboard[4][j].includes('F')) {
-            //     this.checkMove()
-            //     }
-            // }        
-        // }, 900)
+        setInterval(() => { 
+            let currentLPosition = 0;
+            for (let i = 0; i<=10; i++) {
+                if (this.gameboard[4][i].includes('L')) {
+                    currentLPosition = i;
+                }
+            }
+            row[4].children[currentLPosition].appendChild(log2b);
+            if (currentLPosition === 10) {
+                this.gameboard[4][currentLPosition] = this.gameboard[4][currentLPosition].slice(0,this.gameboard[4][currentLPosition].length-1);
+                this.gameboard[4][0] += 'L';
+                row[4].children[0].appendChild(log2b);
+            } else{
+                this.gameboard[4][currentLPosition] = this.gameboard[4][currentLPosition].slice(0,this.gameboard[4][currentLPosition].length-1);
+                this.gameboard[4][currentLPosition+1] += 'L';
+                row[4].children[currentLPosition].appendChild(log2b);
+            }
+            for (let j = 0; j<=row[4].length-1; j++) {
+                if (this.gameboard[4][j].includes('F')) {
+                this.checkMove()
+                }
+            }        
+        }, 900)
     },
     death() {
         let y = this.currentFPosition[0];
@@ -392,11 +371,11 @@ const game = {
                 row[10].children[5].appendChild(frog)
             }
     },
-    // checkDead() {
-    //     setInterval(() => {
-    //         this.checkMove();
-    //     }, 500)
-    // },
+    checkDead() {
+        setInterval(() => {
+            this.checkMove();
+        }, 500)
+    },
     gameOver() {
         const modal = document.getElementById("modal");
         const span = document.getElementsByClassName("close")[0];

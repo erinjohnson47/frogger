@@ -73,6 +73,7 @@ nav a {
 .log {
     height: 45px;
     width: auto;
+    z-index: 1;
 }
 .grass {
     background-color: green;
