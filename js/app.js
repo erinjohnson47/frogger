@@ -2,16 +2,15 @@
 const log3 = document.createElement('img');
     log3.class='log';
     log3.src = "images/log3.png";
-const log2 = document.createElement('img');
-    log2.class='log';
-    log2.src = "images/log2.png";
+const log2a = document.createElement('img');
+    log2a.class='log';
+    log2a.src = "images/log2-a.png";
 const log3b = document.createElement('img');
     log3b.class='log';
     log3b.src = "images/log3b.png";
 const log2b = document.createElement('img');
     log2b.class='log';
-    log2b.src = "images/log2b.png";
-
+    log2b.src = "images/log2-b.png";
 const car1 = document.createElement('img'); //consider adding for loop to loop through cars?
     car1.id='car1';
     car1.src='images/car1.png';
@@ -42,10 +41,7 @@ const playBtn = document.querySelector('#start');
 
 playBtn.addEventListener("click", () => {
     game.start();
-    game.cars();
-    game.logs();
-    game.timerStart();
-    game.checkDead();
+
 })
 const key = document.addEventListener('keydown', (e) => {
     e.preventDefault(); //stops the page from scrolling instead of the frog moving
@@ -92,6 +88,10 @@ const game = {
         if (this.gameboard[y][x].includes("F")){
             row[y].children[x].appendChild(frog)
         }
+        this.cars();
+        this.logs();
+        this.timerStart();
+        this.checkDead();
     },
     timerStart(key) {
         if (this.timer===60 && key==="ArrowUp") {
@@ -267,7 +267,8 @@ const game = {
     },
     logs() {
     this.gameboard[1][0] = 'wL'; //log3 in row 1 should move right, slowly
-    this.gameboard[2][10] = 'wL'; //log2 in row 2 should move left quickly
+    this.gameboard[2][8] = 'wL'; //log2-b in row 2 should move left quickly
+    this.gameboard[2][9] = 'wL'; //log2-a in row 2 should move left quickly
     this.gameboard[3][0] = 'wL'; //log3b in row 3 should move left slowly
     this.gameboard[4][10] = 'wL'; //log2b in row 4 should move right quickly
         setInterval(() => { 
@@ -294,28 +295,37 @@ const game = {
             // }
         }, 900)
         setInterval(() => { 
-            let currentLPosition = 10;
-            for (let i = 0; i<=10; i++) {
+            let currentAPosition = 6;
+            let currentBPosition = 7;
+            for (let i = 0; i<10; i++) {
                 if (this.gameboard[2][i].includes('L')) {
-                    currentLPosition = i;
+                    currentAPosition = i;
+                    currentBPosition = currentAPosition+1;
                 }
             }
-            row[2].children[currentLPosition].appendChild(log2);
-            if (currentLPosition === 0) {
-                this.gameboard[2][currentLPosition] = this.gameboard[2][currentLPosition].slice(0,this.gameboard[2][currentLPosition].length-1);
+            row[2].children[currentAPosition].appendChild(log2a);
+            row[2].children[currentBPosition].appendChild(log2b);
+            if (currentAPosition === 0) {
+                this.gameboard[2][currentAPosition] = this.gameboard[2][currentAPosition].slice(0,this.gameboard[2][currentAPosition].length-1);
                 this.gameboard[2][10] += 'L';
-                row[2].children[10].appendChild(log2);
-            } else{
-                this.gameboard[2][currentLPosition] = this.gameboard[2][currentLPosition].slice(0,this.gameboard[2][currentLPosition].length-1);
-                this.gameboard[2][currentLPosition-1] += 'L';
-                row[2].children[currentLPosition].appendChild(log2);
+                row[2].children[10].appendChild(log2a);
+                row[2].children[0].appendChild(log2b);
+            } else if (currentAPosition === 10) {
+                currentBPosition === 0;
+                if (currentBPosition === 0) {
+                this.gameboard[2][currentBPosition] = this.gameboard[2][currentBPosition].slice(0,this.gameboard[2][currentBPosition].length-1);
+                this.gameboard[2][10] += 'L';
+                row[2].children[10].appendChild(log2b);}
             }
-            // for (let j = 0; j<=row[2].length-1; j++) {
-            //     if (this.gameboard[2][j].includes('F')) {
-            //     this.checkMove()
-            //     }
-            // }
-        }, 600)
+            else {
+                this.gameboard[2][currentAPosition] = this.gameboard[2][currentAPosition].slice(0,this.gameboard[2][currentAPosition].length-1);
+                this.gameboard[2][currentBPosition] = this.gameboard[2][currentBPosition].slice(0,this.gameboard[2][currentBPosition].length-1);
+                this.gameboard[2][currentAPosition-1] += 'L';
+                this.gameboard[2][currentAPosition-2] += 'L';
+                row[2].children[currentAPosition].appendChild(log2a);
+                row[2].children[currentBPosition].appendChild(log2b);
+            } 
+        }, 450)
         setInterval(() => { 
             let currentLPosition = 10;
             for (let i = 0; i<=10; i++) {
@@ -339,29 +349,29 @@ const game = {
             //     }
             // }
         }, 900)
-        setInterval(() => { 
-            let currentLPosition = 0;
-            for (let i = 0; i<=10; i++) {
-                if (this.gameboard[4][i].includes('L')) {
-                    currentLPosition = i;
-                }
-            }
-            row[4].children[currentLPosition].appendChild(log2b);
-            if (currentLPosition === 10) {
-                this.gameboard[4][currentLPosition] = this.gameboard[4][currentLPosition].slice(0,this.gameboard[4][currentLPosition].length-1);
-                this.gameboard[4][0] += 'L';
-                row[4].children[0].appendChild(log2b);
-            } else{
-                this.gameboard[4][currentLPosition] = this.gameboard[4][currentLPosition].slice(0,this.gameboard[4][currentLPosition].length-1);
-                this.gameboard[4][currentLPosition+1] += 'L';
-                row[4].children[currentLPosition].appendChild(log2b);
-            }
+        // setInterval(() => { 
+        //     let currentLPosition = 0;
+        //     for (let i = 0; i<=10; i++) {
+        //         if (this.gameboard[4][i].includes('L')) {
+        //             currentLPosition = i;
+        //         }
+        //     }
+        //     row[4].children[currentLPosition].appendChild(log2b);
+        //     if (currentLPosition === 10) {
+        //         this.gameboard[4][currentLPosition] = this.gameboard[4][currentLPosition].slice(0,this.gameboard[4][currentLPosition].length-1);
+        //         this.gameboard[4][0] += 'L';
+        //         row[4].children[0].appendChild(log2b);
+        //     } else{
+        //         this.gameboard[4][currentLPosition] = this.gameboard[4][currentLPosition].slice(0,this.gameboard[4][currentLPosition].length-1);
+        //         this.gameboard[4][currentLPosition+1] += 'L';
+        //         row[4].children[currentLPosition].appendChild(log2b);
+        //     }
             // for (let j = 0; j<=row[4].length-1; j++) {
             //     if (this.gameboard[4][j].includes('F')) {
             //     this.checkMove()
             //     }
             // }        
-        }, 900)
+        // }, 900)
     },
     death() {
         let y = this.currentFPosition[0];
@@ -369,6 +379,9 @@ const game = {
         // if (this.gameboard[y][x] === 'wF' || this.gameboard[y][x] === 'bF' || this.gameboard[y][x] === 'rCF' || this.gameboard[y][x]==='rFC') {
         //     console.log(`${this.gameboard[y][x]}: Your Frog is DEAD! :-X`);
             this.lives -= 1
+            if (this.lives===0) {
+                this.gameOver();
+            }
             document.querySelector('#lives').innerText = `Lives: ${this.lives}`
             clearInterval(this.time)
             this.timer = 60;
@@ -379,10 +392,23 @@ const game = {
                 row[10].children[5].appendChild(frog)
             }
     },
-    checkDead() {
-        setInterval(() => {
-            this.checkMove();
-        }, 500)
+    // checkDead() {
+    //     setInterval(() => {
+    //         this.checkMove();
+    //     }, 500)
+    // },
+    gameOver() {
+        const modal = document.getElementById("modal");
+        const span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+        span.onclick = function() {
+            modal.style.display = "none";
+          }
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+        game.start();
     }
 }
-
