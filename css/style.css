@@ -58,13 +58,18 @@ nav a {
 }
 .lilypad {
     background-color: blue;
+    /* z-index: 1; */
 }
 .bush {
     background-color: darkgreen;
 }
 .water {
     background-color: blue;
+    /* overflow-x: hidden; */
 }
+
+/* .water-container {
+} */
 .log {
     height: 45px;
     width: auto;
@@ -101,13 +106,14 @@ nav a {
     width: 199px;
     text-align: center;
 }
-.log {
+/* .log {
     overflow: hidden;
-}
+} */
 #frog {
     height: 50px;
     width: 50px;
-    /* background-color: yellow; */
+    z-index: 2;
+    position: absolute;
 }
 .car {
     height: 55px;

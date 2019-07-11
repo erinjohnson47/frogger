@@ -5,11 +5,9 @@ const log3 = document.createElement('img');
 const log2 = document.createElement('img');
     log2.class='log';
     log2.src = "images/log2.png";
-
 const log3b = document.createElement('img');
     log3b.class='log';
     log3b.src = "images/log3b.png";
-
 const log2b = document.createElement('img');
     log2b.class='log';
     log2b.src = "images/log2b.png";
@@ -47,6 +45,7 @@ playBtn.addEventListener("click", () => {
     game.cars();
     game.logs();
     game.timerStart();
+    game.checkDead();
 })
 const key = document.addEventListener('keydown', (e) => {
     e.preventDefault(); //stops the page from scrolling instead of the frog moving
@@ -70,6 +69,7 @@ const game = {
     lives: 6, /*code here to show frog icons instead of the number?*/
     timer: 61, /*code to show timer status bar instead of numbers?*/
     score: 0,
+    time: null,
     currentFPosition: [10,5],
     gameboard: [
         ['b','l','b','l','b','l','b','l','b','l','b'],
@@ -96,18 +96,19 @@ const game = {
     timerStart(key) {
         if (this.timer===60 && key==="ArrowUp") {
             this.timer--
-        const timer = setInterval(() => {
+            this.time = setInterval(() => {
             let y = this.currentFPosition[0];
             let x = this.currentFPosition[1];
+            this.checkMove()
             this.timer -= 1;
             document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
             if (this.timer === 0) {
-                clearInterval(timer);
+                clearInterval(this.time);
                 this.currentFPosition= [10,5];
                 this.start();
                 document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
             } else if (this.gameboard[y][x] === 'lF') {
-                clearInterval(timer);
+                clearInterval(this.time);
                 // switch (this.currentFPosition[y][x]) {
                 //     case this.currentFPosition === [0,1]:
                 //     row[0].removeChild('#lilypad1');
@@ -124,7 +125,7 @@ const game = {
                 this.start();
                 document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
             }
-            
+            // this.checkMove()
             }, 1000);
         }
     },
@@ -178,7 +179,9 @@ const game = {
                 this.gameboard[9][currentCPosition-1] += 'C';
                 row[9].children[currentCPosition].appendChild(car1);
             }
-            this.checkMove()
+            // if (this.gameboard[9].includes('F')) {
+            //     this.checkMove()
+            // }
             }, 1000)
         setInterval(() => {  //row 8, car3, right, fast
             let currentCPosition = 0;
@@ -197,7 +200,11 @@ const game = {
                 this.gameboard[8][currentCPosition+1] += 'C';
                 row[8].children[currentCPosition].appendChild(car3);
             }
-            this.checkMove()
+            // for (let j = 0; j<=row[8].length-1; j++) {
+            //     if (this.gameboard[8][j].includes('F')) {
+            //     this.checkMove()
+            //     }
+            // }
             }, 600)
         setInterval(() => {  //row 7, car 2, left, fast
             let currentCPosition = 10;
@@ -216,7 +223,11 @@ const game = {
                 this.gameboard[7][currentCPosition-1] += 'C';
                 row[7].children[currentCPosition].appendChild(car2);
             }
-            this.checkMove()
+            // for (let j = 0; j<=row[7].length-1; j++) {
+            //     if (this.gameboard[7][j].includes('F')) {
+            //     this.checkMove()
+            //     }
+            // }           
             }, 450)
         setInterval(() => {  //row 6, car 4, right slow
             let currentCPosition = 0;
@@ -235,16 +246,18 @@ const game = {
                 this.gameboard[6][currentCPosition+1] += 'C';
                 row[6].children[currentCPosition].appendChild(car4);
             }
-            this.checkMove()
-            }, 850)
+            // for (let j = 0; j<=row[6].length-1; j++) {
+            //     if (this.gameboard[6][j].includes('F')) {
+            //     // this.checkMove()
+            //     }
+            // }       
+        }, 850)
     },
     checkMove() {
         let y = this.currentFPosition[0];
         let x = this.currentFPosition[1];
         if (this.gameboard[y][x] === 'wF' || this.gameboard[y][x] === 'bF' || this.gameboard[y][x].includes('C')) {
-            console.log(`${this.gameboard[y][x]}: Your Frog is DEAD! :-X`);
-            this.lives -= 1;
-            //reduce lives by 1, place new frog on board
+            this.death();
         } else if (this.gameboard[y][x] === 'lF') {
             console.log(`${this.gameboard[y][x]}: Congrats your Frog made it to safety!`);
             //code for next frog placed on board
@@ -274,7 +287,11 @@ const game = {
                 this.gameboard[1][currentLPosition+1] += 'L';
                 row[1].children[currentLPosition].appendChild(log3);
             }
-            this.checkMove()
+            // for (let j = 0; j<=row[1].length-1; j++) {
+            //     if (this.gameboard[1][j].includes('F')) {
+            //     this.checkMove()
+            //     }
+            // }
         }, 900)
         setInterval(() => { 
             let currentLPosition = 10;
@@ -293,7 +310,11 @@ const game = {
                 this.gameboard[2][currentLPosition-1] += 'L';
                 row[2].children[currentLPosition].appendChild(log2);
             }
-            this.checkMove()
+            // for (let j = 0; j<=row[2].length-1; j++) {
+            //     if (this.gameboard[2][j].includes('F')) {
+            //     this.checkMove()
+            //     }
+            // }
         }, 600)
         setInterval(() => { 
             let currentLPosition = 10;
@@ -312,7 +333,11 @@ const game = {
                 this.gameboard[3][currentLPosition-1] += 'L';
                 row[3].children[currentLPosition].appendChild(log3b);
             }
-            this.checkMove()
+            // for (let j = 0; j<=row[3].length-1; j++) {
+            //     if (this.gameboard[3][j].includes('F')) {
+            //     this.checkMove()
+            //     }
+            // }
         }, 900)
         setInterval(() => { 
             let currentLPosition = 0;
@@ -331,11 +356,33 @@ const game = {
                 this.gameboard[4][currentLPosition+1] += 'L';
                 row[4].children[currentLPosition].appendChild(log2b);
             }
-            this.checkMove()
+            // for (let j = 0; j<=row[4].length-1; j++) {
+            //     if (this.gameboard[4][j].includes('F')) {
+            //     this.checkMove()
+            //     }
+            // }        
         }, 900)
     },
-    gameReset() {
-        this.lives -=1;
-
+    death() {
+        let y = this.currentFPosition[0];
+        let x = this.currentFPosition[1];
+        // if (this.gameboard[y][x] === 'wF' || this.gameboard[y][x] === 'bF' || this.gameboard[y][x] === 'rCF' || this.gameboard[y][x]==='rFC') {
+        //     console.log(`${this.gameboard[y][x]}: Your Frog is DEAD! :-X`);
+            this.lives -= 1
+            document.querySelector('#lives').innerText = `Lives: ${this.lives}`
+            clearInterval(this.time)
+            this.timer = 60;
+            document.querySelector('#timer').innerText = `Timer: ${this.timer}`
+            this.currentFPosition= [10,5];
+            this.gameboard[10][5] = 'gF'
+            if (this.gameboard[10][5].includes("F")){
+                row[10].children[5].appendChild(frog)
+            }
+    },
+    checkDead() {
+        setInterval(() => {
+            this.checkMove();
+        }, 500)
     }
 }
+
