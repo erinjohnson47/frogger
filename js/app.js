@@ -8,6 +8,8 @@ const row = document.querySelectorAll(".row")
 const playBtn = document.querySelector('#start');
 
 playBtn.addEventListener("click", () => {
+    document.querySelector(".intro").style.display = 'none';
+    document.querySelector('header').style.fontSize = '45px';
     game.start();
     game.cars();
     game.logs();
@@ -453,6 +455,8 @@ const game = {
         } else if (this.timer === 0) {
             this.death();
             this.start();
+        } else if (this.gameboard[0].includes('l') !== true) {
+            this.gameOver('win');
         }
         }, 300);
     },
@@ -461,7 +465,7 @@ const game = {
             if (this.lives===0) {
                 clearInterval(this.clock)
                 clearInterval(this.check)
-                this.gameOver();
+                this.gameOver('lose');
             } else {
                 clearInterval(this.clock)
                 document.querySelector('#lives').innerText = `Lives: ${this.lives}`
@@ -482,38 +486,57 @@ const game = {
                 case 1 :
                 const lily1 = document.querySelector("#lily1");
                 lily1.style.display = 'none';
+                this.gameboard[0][1] = '';
                 break;
-                // row[0].removeChild('#lilypad1');
-                // case this.currentFPosition === [0,3]:
-                // row[0].removeChild('#lilypad2');
-                // case this.currentFPosition === [0,5]:
-                // row[0].removeChild('#lilypad3');
-                // case this.currentFPosition === [0,7]:
-                // row[0].removeChild('#lilypad4');
-                // case this.currentFPosition === [0,9]:
-                // row[0].removeChild('#lilypad5');
+                case 3 :
+                const lily2 = document.querySelector("#lily2");
+                lily2.style.display = 'none';
+                this.gameboard[0][3] = '';
+                break;
+                case 5 :
+                const lily3 = document.querySelector("#lily3");
+                lily3.style.display = 'none';
+                this.gameboard[0][5] = '';
+                break;
+                case 7 :
+                const lily4 = document.querySelector("#lily4");
+                lily4.style.display = 'none';
+                this.gameboard[0][7] = '';
+                break;
+                case 9 :
+                const lily5 = document.querySelector("#lily5");
+                lily5.style.display = 'none';
+                this.gameboard[0][9] = '';
+                break;
             }
         document.querySelector('#score').innerText = `Score: ${this.score}`
         this.start();
-        
-
         //add bonus score based on how quickly round is finished
     },
-    gameOver() {
-        document.querySelector('#lives').innerText = `Lives: 0`
-        document.querySelector('#timer').innerText = `Timer: 0s`
+    gameOver(result) {
         const modal = document.querySelector(".modal");
         const modalText = document.querySelector(".modal-content")
-        modalText.innerText = 'GAMEOVER'
         const span = document.getElementsByClassName("close")[0];
-        modal.style.display = "block";
         span.onclick = function() {
             modal.style.display = "none";
+            document.querySelector(".intro").style.display = 'show';
           }
         window.onclick = function(event) {
             if (event.target === modal) {
                 modal.style.display = "none";
+                document.querySelector(".intro").style.display = 'show';
             }
+        }
+        if (result === 'win') {
+        document.querySelector('#timer').innerText = `Timer: 0s`
+        modal.style.display = "block";
+        modalText.innerText = `YOU WIN!!! Final Score: ${this.score}` 
+        }
+        if (result === 'lose') {
+        document.querySelector('#lives').innerText = `Lives: 0`
+        document.querySelector('#timer').innerText = `Timer: 0s`
+        modal.style.display = "block";
+        modalText.innerText = `GAME OVER! Final Score: ${this.score}` 
         }
         this.start();
     }
