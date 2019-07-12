@@ -54,7 +54,7 @@ const game = {
     start() {
         this.timer = 60;
         document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
-        this.currentFPosition = [10,5]
+        this.currentFPosition = [10, 5]
         let y = this.currentFPosition[0];
         let x = this.currentFPosition[1];
         this.gameboard[10][5] = 'gF'
@@ -460,6 +460,7 @@ const game = {
             this.lives -= 1;
             if (this.lives===0) {
                 clearInterval(this.clock)
+                clearInterval(this.check)
                 this.gameOver();
             } else {
                 clearInterval(this.clock)
@@ -476,28 +477,34 @@ const game = {
     winRound() {
         clearInterval(this.time);
         this.score += 1000;
+        let x = this.currentFPosition[1]; 
+                switch (x) {
+                case 1 :
+                const lily1 = document.querySelector("#lily1");
+                lily1.style.display = 'none';
+                break;
+                // row[0].removeChild('#lilypad1');
+                // case this.currentFPosition === [0,3]:
+                // row[0].removeChild('#lilypad2');
+                // case this.currentFPosition === [0,5]:
+                // row[0].removeChild('#lilypad3');
+                // case this.currentFPosition === [0,7]:
+                // row[0].removeChild('#lilypad4');
+                // case this.currentFPosition === [0,9]:
+                // row[0].removeChild('#lilypad5');
+            }
         document.querySelector('#score').innerText = `Score: ${this.score}`
         this.start();
-
-
-
-            // switch (this.currentFPosition[y][x]) {
-            //     case this.currentFPosition === [0,1]:
-            //     row[0].removeChild('#lilypad1');
-            //     case this.currentFPosition === [0,3]:
-            //     row[0].removeChild('#lilypad2');
-            //     case this.currentFPosition === [0,5]:
-            //     row[0].removeChild('#lilypad3');
-            //     case this.currentFPosition === [0,7]:
-            //     row[0].removeChild('#lilypad4');
-            //     case this.currentFPosition === [0,9]:
-            //     row[0].removeChild('#lilypad5');
-            // }
+        
 
         //add bonus score based on how quickly round is finished
     },
     gameOver() {
-        const modal = document.getElementById("modal");
+        document.querySelector('#lives').innerText = `Lives: 0`
+        document.querySelector('#timer').innerText = `Timer: 0s`
+        const modal = document.querySelector(".modal");
+        const modalText = document.querySelector(".modal-content")
+        modalText.innerText = 'GAMEOVER'
         const span = document.getElementsByClassName("close")[0];
         modal.style.display = "block";
         span.onclick = function() {
