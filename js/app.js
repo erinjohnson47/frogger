@@ -9,6 +9,8 @@ const playBtn = document.querySelector('#start');
 
 playBtn.addEventListener("click", () => {
     game.start();
+    game.cars();
+    game.logs();
 
 })
 const key = document.addEventListener('keydown', (e) => {
@@ -32,9 +34,9 @@ console.log
 
 const game = {
     lives: 6, /*code here to show frog icons instead of the number?*/
-    timer: 61, /*code to show timer status bar instead of numbers?*/
+    timer: 60, /*code to show timer status bar instead of numbers?*/
     score: 0,
-    time: null,
+    clock: null,
     currentFPosition: [10,5],
     gameboard: [
         ['b','l','b','l','b','l','b','l','b','l','b'],
@@ -50,53 +52,27 @@ const game = {
         ['g','g','g','g','g','g','g','g','g','g','g'],
     ],
     start() {
+        this.timer = 60;
+        document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
+        this.currentFPosition = [10,5]
         let y = this.currentFPosition[0];
         let x = this.currentFPosition[1];
-        this.timer = 60;
         this.gameboard[10][5] = 'gF'
         if (this.gameboard[y][x].includes("F")){
             row[y].children[x].appendChild(frog)
         }
-        this.cars();
-        this.logs();
         this.timerStart();
-        this.checkDead();
     },
     timerStart(key) {
         if (this.timer===60 && key==="ArrowUp") {
             this.timer--
-            this.time = setInterval(() => {
+            this.clock = setInterval(() => {
             let y = this.currentFPosition[0];
             let x = this.currentFPosition[1];
-            this.checkMove()
             this.timer -= 1;
             document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
-            if (this.timer === 0) {
-                clearInterval(this.time);
-                this.currentFPosition= [10,5];
-                this.start();
-                document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
-            } else if (this.gameboard[y][x] === 'lF') {
-                clearInterval(this.time);
-                // switch (this.currentFPosition[y][x]) {
-                //     case this.currentFPosition === [0,1]:
-                //     row[0].removeChild('#lilypad1');
-                //     case this.currentFPosition === [0,3]:
-                //     row[0].removeChild('#lilypad2');
-                //     case this.currentFPosition === [0,5]:
-                //     row[0].removeChild('#lilypad3');
-                //     case this.currentFPosition === [0,7]:
-                //     row[0].removeChild('#lilypad4');
-                //     case this.currentFPosition === [0,9]:
-                //     row[0].removeChild('#lilypad5');
-                // }
-                this.currentFPosition= [10,5];
-                document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
-                //add bonus score based on how quickly round is finished
-                this.score = 1000;
-            }
-            this.checkMove()
             }, 1000);
+            this.checkMove()
         }
     },
     move(key) {
@@ -464,36 +440,61 @@ const game = {
         }, 800)
     },
     checkMove() {
+        setInterval(() => {
         let y = this.currentFPosition[0];
         let x = this.currentFPosition[1];
         if (this.gameboard[y][x].includes('L') || this.gameboard[y][x] === 'bF' || this.gameboard[y][x].includes('C')) {
+            clearInterval(this.clock)
             this.death();
         } else if (this.gameboard[y][x] === 'lF') {
-            console.log(`${this.gameboard[y][x]}: Congrats your Frog made it to safety!`);
-            //code for next frog placed on board
-            //reset timer
-            //add points?
+            clearInterval(this.clock)
+            console.log(this)
+            this.winRound();
+        } else if (this.timer === 0) {
+            this.death();
+            this.start();
         }
+        }, 300);
     },
     death() {
-            this.lives -= 1
+            this.lives -= 1;
             if (this.lives===0) {
+                clearInterval(this.clock)
                 this.gameOver();
+            } else {
+                clearInterval(this.clock)
+                document.querySelector('#lives').innerText = `Lives: ${this.lives}`
+                this.timer = 60;
+                document.querySelector('#timer').innerText = `Timer: ${this.timer}`
+                this.currentFPosition= [10,5];
+                this.gameboard[10][5] = 'gF'
+                if (this.gameboard[10][5].includes("F")){
+                    row[10].children[5].appendChild(frog)
             }
-            document.querySelector('#lives').innerText = `Lives: ${this.lives}`
-            clearInterval(this.time)
-            this.timer = 60;
-            document.querySelector('#timer').innerText = `Timer: ${this.timer}`
-            this.currentFPosition= [10,5];
-            this.gameboard[10][5] = 'gF'
-            if (this.gameboard[10][5].includes("F")){
-                row[10].children[5].appendChild(frog)
-            }
+        }
     },
-    checkDead() {
-        setInterval(() => {
-            this.checkMove();
-        }, 300)
+    winRound() {
+        clearInterval(this.time);
+        this.score += 1000;
+        document.querySelector('#score').innerText = `Score: ${this.score}`
+        this.start();
+
+
+
+            // switch (this.currentFPosition[y][x]) {
+            //     case this.currentFPosition === [0,1]:
+            //     row[0].removeChild('#lilypad1');
+            //     case this.currentFPosition === [0,3]:
+            //     row[0].removeChild('#lilypad2');
+            //     case this.currentFPosition === [0,5]:
+            //     row[0].removeChild('#lilypad3');
+            //     case this.currentFPosition === [0,7]:
+            //     row[0].removeChild('#lilypad4');
+            //     case this.currentFPosition === [0,9]:
+            //     row[0].removeChild('#lilypad5');
+            // }
+
+        //add bonus score based on how quickly round is finished
     },
     gameOver() {
         const modal = document.getElementById("modal");
@@ -507,6 +508,6 @@ const game = {
                 modal.style.display = "none";
             }
         }
-        game.start();
+        this.start();
     }
 }
