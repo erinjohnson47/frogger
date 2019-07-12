@@ -126,31 +126,35 @@ const game = {
         car4.src='images/car4.png';
         car4.className='car';
 
-        //starting positions for each car
-        this.gameboard[9][10] = 'rC'; //car1 in row 9 should move left slowly
-        this.gameboard[8][0] = 'rC'; //car3 in row 8 should move right quickly
-        this.gameboard[7][10] = 'rC'; //car2 in row 7 should move left quickly
-        this.gameboard[6][0] = 'rC'; //car4 in row 6 should move right slowly
+    //starting positions for each car
+    let currentC1Position = 10;
+    this.gameboard[9][10] = 'rC'; //car1 in row 9 should move left slowly
+    this.gameboard[8][0] = 'rC'; //car3 in row 8 should move right quickly
+    this.gameboard[7][10] = 'rC'; //car2 in row 7 should move left quickly
+    this.gameboard[6][0] = 'rC'; //car4 in row 6 should move right slowly
         setInterval(() => {  //row 9, car 1, left/slow
-            let currentCPosition = 10;
-            for (let i = 0; i<=10; i++) {
-                if (this.gameboard[9][i].includes('C')) {
-                    currentCPosition = i;
-                }
-            }
-            row[9].children[currentCPosition].appendChild(car1);
-            if (currentCPosition === 0) {
-                this.gameboard[9][currentCPosition] = this.gameboard[9][currentCPosition].slice(0,this.gameboard[9][currentCPosition].length-1);
+            row[9].children[currentC1Position].appendChild(car1);
+            // for (let i = 0; i<=10; i++) {
+            //     if (this.gameboard[9][i].includes('C')) {
+            //         currentC1Position = i;
+            //     }
+            // }
+            // row[9].children[currentC1Position].appendChild(car1);
+            if (currentC1Position === 0) {
+                this.gameboard[9][currentC1Position] = this.gameboard[9][currentC1Position].slice(0,this.gameboard[9][currentC1Position].length-1);
+                currentC1Position = 10;
                 this.gameboard[9][10] += 'C';
                 row[9].children[10].appendChild(car1);
             } else{
-                this.gameboard[9][currentCPosition] = this.gameboard[9][currentCPosition].slice(0,this.gameboard[9][currentCPosition].length-1);
-                this.gameboard[9][currentCPosition-1] += 'C';
-                row[9].children[currentCPosition].appendChild(car1);
+                this.gameboard[9][currentC1Position] = this.gameboard[9][currentC1Position].slice(0,this.gameboard[9][currentC1Position].length-1);
+                currentC1Position -= 1;
+                this.gameboard[9][currentC1Position-1] += 'C';
+                row[9].children[currentC1Position].appendChild(car1);
             }
-            }, 1000)
+            }, 550)
         setInterval(() => {  //row 8, car3, right, fast
             let currentCPosition = 0;
+            row[8].children[currentCPosition].appendChild(car3);
             for (let i = 0; i<=10; i++) {
                 if (this.gameboard[8][i].includes('C')) {
                     currentCPosition = i;
@@ -166,9 +170,10 @@ const game = {
                 this.gameboard[8][currentCPosition+1] += 'C';
                 row[8].children[currentCPosition].appendChild(car3);
             }
-            }, 1000)
+            }, 750)
         setInterval(() => {  //row 7, car 2, left, fast
             let currentCPosition = 10;
+            row[7].children[currentCPosition].appendChild(car2);
             for (let i = 0; i<=10; i++) {
                 if (this.gameboard[7][i].includes('C')) {
                     currentCPosition = i;
@@ -184,9 +189,10 @@ const game = {
                 this.gameboard[7][currentCPosition-1] += 'C';
                 row[7].children[currentCPosition].appendChild(car2);
             }           
-            }, 1000)
+            }, 450)
         setInterval(() => {  //row 6, car 4, right slow
             let currentCPosition = 0;
+            row[6].children[currentCPosition].appendChild(car4);
             for (let i = 0; i<=10; i++) {
                 if (this.gameboard[6][i].includes('C')) {
                     currentCPosition = i;
@@ -314,7 +320,7 @@ const game = {
                 current3C1Position -= 1;
                 row[1].children[current3C1Position].appendChild(log3c1);
             } 
-        }, 600)
+        }, 800)
         setInterval(() => { 
             row[2].children[current2A1Position].appendChild(log2a1);
             row[2].children[current2B1Position].appendChild(log2b1);
@@ -348,7 +354,7 @@ const game = {
                 current2B1Position -= 1;
                 row[2].children[current2B1Position].appendChild(log2b1);
             } 
-        }, 600)
+        }, 400)
     setInterval(() => {
         row[3].children[current3A2Position].appendChild(log3a2);
         row[3].children[current3B2Position].appendChild(log3b2);
@@ -405,7 +411,7 @@ const game = {
             current3C2Position -= 1;
             row[3].children[current3C2Position].appendChild(log3c2);
         } 
-    }, 900)
+    }, 700)
         setInterval(() => { 
             row[4].children[current2A2Position].appendChild(log2a2);
             row[4].children[current2B2Position].appendChild(log2b2);
@@ -439,7 +445,7 @@ const game = {
                 current2B2Position -= 1;
                 row[4].children[current2B2Position].appendChild(log2b2);
             } 
-        }, 800)
+        }, 475)
     },
     checkMove() {
         setInterval(() => {
