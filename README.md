@@ -13,17 +13,19 @@ instructions:
 7. the timer will start when you move your frog)
 
 ### Play Here
-[Link](https://erinjohnson47.github.io/frogger/)
+[Click to Play Frogger](https://erinjohnson47.github.io/frogger/)
 
-###Technologies Used
+### Technologies Used
 - JavaScript
 - HTML5
 - CSS3
 
-###Wireframe
-Planning the board:
+### Wireframe
+#### Planning the board:
 ![Image](images/gameboard.jpg)
-Planning the board array and strings:
+
+#### Planning the board array and strings:
 ![Image](images/gameboardPlanning.jpg)
-Working through moving the frog:
+
+#### Working through moving the frog:
 ![Image](images/movingFrog.jpg)
