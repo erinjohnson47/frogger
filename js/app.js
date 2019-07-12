@@ -27,6 +27,7 @@ const key = document.addEventListener('keydown', (e) => {
             game.move(e.key);
             break;
 }
+console.log
 });
 
 const game = {
@@ -90,8 +91,9 @@ const game = {
                 //     row[0].removeChild('#lilypad5');
                 // }
                 this.currentFPosition= [10,5];
-                this.start();
                 document.querySelector('#timer').innerText = `Timer: ${this.timer}s`
+                //add bonus score based on how quickly round is finished
+                this.score = 1000;
             }
             this.checkMove()
             }, 1000);
@@ -123,7 +125,6 @@ const game = {
             this.currentFPosition = [y, x+1];
             row[y].children[x+1].appendChild(frog);
         }
-        console.log(this.gameboard);
         this.checkMove();
     },
     cars() { //create a car Class to loop through creation of cars?
@@ -187,7 +188,7 @@ const game = {
                 this.gameboard[8][currentCPosition+1] += 'C';
                 row[8].children[currentCPosition].appendChild(car3);
             }
-            }, 600)
+            }, 1000)
         setInterval(() => {  //row 7, car 2, left, fast
             let currentCPosition = 10;
             for (let i = 0; i<=10; i++) {
@@ -205,7 +206,7 @@ const game = {
                 this.gameboard[7][currentCPosition-1] += 'C';
                 row[7].children[currentCPosition].appendChild(car2);
             }           
-            }, 450)
+            }, 1000)
         setInterval(() => {  //row 6, car 4, right slow
             let currentCPosition = 0;
             for (let i = 0; i<=10; i++) {
@@ -224,8 +225,7 @@ const game = {
                 row[6].children[currentCPosition].appendChild(car4);
             }       
         }, 850)
-    },
-    
+    },   
     logs() {
         const log2a1 = document.createElement('img'); //2 represents number of divs, A is img position, 1st copy
         log2a1.class='log';
@@ -370,7 +370,6 @@ const game = {
                 current2B1Position -= 1;
                 row[2].children[current2B1Position].appendChild(log2b1);
             } 
-            console.log(this.gameboard);
         }, 600)
     setInterval(() => {
         row[3].children[current3A2Position].appendChild(log3a2);
@@ -416,7 +415,7 @@ const game = {
         }
         else {
             this.gameboard[3][current3A2Position] = this.gameboard[3][current3A2Position].slice(0,this.gameboard[3][current3B2Position].length-1);
-            this.gameboard[1][current3A2Position-1] += 'L';
+            this.gameboard[3][current3A2Position-1] += 'L';
             current3A2Position -= 1;
             row[3].children[current3A2Position].appendChild(log3a2);
             this.gameboard[3][current3B2Position] = this.gameboard[3][current3B2Position].slice(0,this.gameboard[3][current3B2Position].length-1);
@@ -458,7 +457,7 @@ const game = {
                 current2A2Position -= 1;
                 row[4].children[current2A2Position].appendChild(log2a2);
                 this.gameboard[4][current2B2Position] = this.gameboard[4][current2B2Position].slice(0,this.gameboard[4][current2B2Position].length-1);
-                this.gameboard[2][current2B2Position-1] += 'L';
+                this.gameboard[4][current2B2Position-1] += 'L';
                 current2B2Position -= 1;
                 row[4].children[current2B2Position].appendChild(log2b2);
             } 
@@ -467,7 +466,7 @@ const game = {
     checkMove() {
         let y = this.currentFPosition[0];
         let x = this.currentFPosition[1];
-        if (this.gameboard[y][x] === 'wF' || this.gameboard[y][x] === 'bF' || this.gameboard[y][x].includes('C')) {
+        if (this.gameboard[y][x].includes('L') || this.gameboard[y][x] === 'bF' || this.gameboard[y][x].includes('C')) {
             this.death();
         } else if (this.gameboard[y][x] === 'lF') {
             console.log(`${this.gameboard[y][x]}: Congrats your Frog made it to safety!`);
@@ -477,10 +476,6 @@ const game = {
         }
     },
     death() {
-        let y = this.currentFPosition[0];
-        let x = this.currentFPosition[1];
-        // if (this.gameboard[y][x] === 'wF' || this.gameboard[y][x] === 'bF' || this.gameboard[y][x] === 'rCF' || this.gameboard[y][x]==='rFC') {
-        //     console.log(`${this.gameboard[y][x]}: Your Frog is DEAD! :-X`);
             this.lives -= 1
             if (this.lives===0) {
                 this.gameOver();
@@ -498,7 +493,7 @@ const game = {
     checkDead() {
         setInterval(() => {
             this.checkMove();
-        }, 500)
+        }, 300)
     },
     gameOver() {
         const modal = document.getElementById("modal");
